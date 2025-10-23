@@ -4,8 +4,8 @@ resource "aws_instance" "example" {
   vpc_security_group_ids   = [aws_security_group.allow_all_traffic.id]    
 
   tags = {
-    Name = "terraform"
-    terraform = "True"
+    Name = var.instance_name[count.index] ### count.index starts from 0
+    terraform = "True"  ### Just metadata to know its created by terraform
   }
 }
 
@@ -27,6 +27,6 @@ resource "aws_security_group" "allow_all_traffic" {
     }
 
     tags    = {
-        Name    = "allow_all_traffic"
+        Name    = "allow_all_traffic" ### just for reference
     }
 }
