@@ -1,10 +1,15 @@
-resource "aws_instance" "example" {
+resource "aws_instance" "Docker" {
   ami               = "ami-09c813fb71547fc4f"
   instance_type     = "t3.micro"
-  vpc_security_group_ids   = [aws_security_group.allow_all_traffic.id]    
+  subnet_id     = data.aws_subnet.default_subnet.id
+  vpc_security_group_ids   = [aws_security_group.allow_all_traffic.id] 
+  user_data =  file("size.sh")
+  root_block_device {
+    volume_size = 50
+  }
 
   tags = {
-    Name = "terraform"
+    Name = "Docker"
     terraform = "True"  ### Just metadata to know its created by terraform
   }
 }
